@@ -6,3 +6,9 @@ dict_hex = {
 }
 
 print(dict_hex)
+
+for x in range(3, 11):
+    a='0x'+ str(x)
+    dict_hex[a]=x
+
+print(dict_hex)
