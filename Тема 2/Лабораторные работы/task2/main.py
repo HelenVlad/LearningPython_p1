@@ -5,3 +5,5 @@ print(list_numbers)
 sr_aref = sum(list_numbers)/len(list_numbers)
 list_numbers[4]=sr_aref
 print(list_numbers)
+
+#строка для создания новой ветки

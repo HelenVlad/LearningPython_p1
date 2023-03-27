@@ -12,3 +12,5 @@ for x in range(3, 11):
     dict_hex[a]=x
 
 print(dict_hex)
+
+#строка для создания новой ветки
