@@ -5,5 +5,5 @@ print(set_)
 print("Сумма уникальных чисел равна", sum(set_))
 print("Количество уникальных чисел равно", len(set_))
 
-sr_aref=round((sum(set_)/len(set_)), 2)
+sr_aref=round((sum(set_)/len(set_)), 5)
 print("Среднее арифметическое уникальных чисел равно", sr_aref)
