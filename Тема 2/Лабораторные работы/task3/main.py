@@ -7,10 +7,10 @@ dict_hex = {
 
 print(dict_hex)
 
-for x in range(3, 11):
-    a='0x'+ str(x)
-    dict_hex[a]=x
+for x in range(3, 16):
+    a = list(hex(x))
+    a[-1] = str.upper(a[-1])
+    a="".join(a)
+    dict_hex[a] = x
 
 print(dict_hex)
-
-#строка для создания новой ветки

@@ -8,7 +8,7 @@ chars = 25   # TODO ввести количество символов в стр
 total_chars = chars*lines*chars  # TODO общее количество символов в книге
 total_bytes = total_chars*BYTES_ONE_CHAR  # TODO размер одной книги в байтах
 
-disk_size = 1440000  # TODO размер дискеты в байтах
+disk_size = 1509949.44  # TODO размер дискеты в байтах
 
 print(disk_size//total_bytes)     # TODO найти количество книг, которое поместится на дискете
 
