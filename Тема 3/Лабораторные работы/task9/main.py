@@ -2,16 +2,15 @@ salary = 5000  # зарплата
 spend = 6000  # траты
 months = 10  # количество месяцев
 increase = 0.03  # рост цен
+money_capital = 0
 
-salary_10months = salary*months
-spend_10month = (spend*increase+spend)*months
-budget = salary_10months-spend_10month
-if budget < 0:
-    need_money = abs(budget)+salary_10months  # количество денег, чтобы прожить 10 месяцев
-    print("Заработанных денег не хватит. Нужно иметь накопления в размере %s. Общее количество денег, нужное, чтобы прожить 10 месяцев, составляет %s" % (round(abs(budget)), round(need_money)))
-else:
-    need_money = salary_10months - spend_10month
-    print("Общее количество денег, нужное, чтобы прожить 10 месяцев, составляет %s" % round(need_money))
-# TODO Оформить решение
+def need_money (spend, money_capital):
+    for x in range(1, months+1):
+        if x >=2:
+            spend += spend * increase
+        budget = salary - spend
+        if budget < 0:
+            money_capital += abs(budget)
+    print("Какую нужно иметь сумму денег, чтобы прожить 10 месяцев, используя только эти деньги и зарплату? Ответ: ", round(money_capital,0))
 
-#print(round(need_money))
+need_money (6000,0)
