@@ -3,6 +3,7 @@ def cells (number_of_cells):
     for key in range(1, (number_of_cells**2)+1):
         cells[key] = 'None'
     return cells
+
 def field (cells, number_of_cells):
     field = []
     counter = 0
@@ -26,15 +27,15 @@ def field (cells, number_of_cells):
 # print(field(spisok, 3))
 
 def players_marker():
-    marker = input('Какой маркер возьмет себе Player1? Если "Х" - введите 1, если "0", то 2. Невыбранный символ присвоится Player2 автоматически. \n')
-    if marker.isdigit() == True:
-        filter(marker.isdigit(), marker)
-        Player1 = 'X' if marker == '1' else '0'
-        Player2 = '0' if marker == '1' else 'X'
+    marker = ''.join(input('Какой маркер возьмет себе Player1? Если "Х" - введите 1, если "0", то 2. Невыбранный символ присвоится Player2 автоматически. \n').split())
+    players_marker_list = {}
+    if len(marker) == 1 and (marker == '1' or marker == '2'):
+            players_marker_list['Player1'] = 'X' if marker == '1' else '0'
+            players_marker_list['Player2'] = '0' if marker == '1' else 'X'
     else:
         print("Нет варианта ответа для выбранного значения. Выберите, пожалуйста, цифру от 1 до 2.")
         players_marker()
-    return Player1, Player2
 
-players_marker()
+    return players_marker_list
+
 print(players_marker())
