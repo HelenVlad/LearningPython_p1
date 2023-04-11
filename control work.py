@@ -6,7 +6,7 @@ def cells (number_of_cells):
 def field (cells, number_of_cells):
     field = []
     counter = 0
-    b = '+---+' * number_of_cells  # выяснить как присобачить длину строки
+    b = '+---+' * number_of_cells
     for lst in cells:
        if counter % number_of_cells == 0:
            field.append(f'\n{b}\n')
