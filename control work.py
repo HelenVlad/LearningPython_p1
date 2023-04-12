@@ -1,3 +1,7 @@
+def dict_to_list(dict): # преобразует словарь с одним элементом в список с двумя элементами
+    items = list(dict.items())[0]
+    items = (items[0], items[1])
+    return items
 def number_of_cells():
     field_size = ''.join(input('Здравствуйте, игроки! Вы запустили игру крестики-нолики. Действие игры проиходит на квадратном поле из ячеек размера N x N. Введите число N в диапазоне от 01 до 10:\n=>').split())
     lst = str(list(range(1, 11)))
@@ -55,16 +59,17 @@ def first_move(players_marker): # игрок выбирает кто ходит 
         first_move()
     return first_move_list
 
-def player_change(player):
+def player_change(player, players_marker_list):
     return 'Player1' if player == 'Player2' else 'Player2'
 
 def players_move(players_marker_list, cells):
-    players_marker_list.keys
-    answer = ''.join(input(f'Твой ход, {players_marker_list.keys()}! Выбери число, соответствующее ячейке, от 1 до {len(cells)}.\n=>').split())
+    items = dict_to_list(players_marker_list)
+    print(items)
+    answer = ''.join(input(f'Твой ход, {items[0]}! Выбери число, соответствующее ячейке, от 1 до {len(cells)}.\n=>').split())
     lst = str(list(range(1, len(cells)+1)))
     if (len(answer) == 1 or len(answer) == 2) and (answer in lst):
         if cells[int(answer)] == 'None':
-            cells[int(answer)] = players_marker_list.values()
+            cells[int(answer)] = items[-1]
             return cells
         else:
             print(f'Данная ячейка занята. Пожалуйста, выберите свободную ячейку.')
@@ -76,13 +81,30 @@ def players_move(players_marker_list, cells):
 
 
 
+# number_of_cells = number_of_cells()
+# players_marker_list = players_marker()
+# first_move = first_move(players_marker_list)
+# cells = cells(number_of_cells)
+# print(field(cells, number_of_cells))
+#
+# players_move(first_move, cells)
+# print(cells)
+# print(field(cells, number_of_cells))
 
-number_of_cells = number_of_cells()
-players_marker_list = players_marker()
-first_move = first_move(players_marker_list)
-cells = cells(number_of_cells)
-print(field(cells, number_of_cells))
 
-players_move(first_move, cells)
-print(cells)
-print(field(cells, number_of_cells))
+number_of_cells_ = number_of_cells() # спрашиваем о размере поля, сохр в переменную
+players_marker_list = players_marker() #спрашиваем о том, кто каким маркером играет, сохр в переменную
+first_move_ = first_move(players_marker_list) #спрашиваем, кто ходит первый,  сохр в переменную
+cells_ = cells(number_of_cells_) #создаем в памяти список с ячейками заданной длинны
+counter = 0
+while True:
+    print(field(cells_, number_of_cells_))
+    move_made = []
+    if counter = 0:
+        cells_ = players_move(first_move_, cells_) # игрок сделал ход, измененное поле записывается в переменной
+        move_made = dict_to_list(first_move_)
+    else:
+        counter +=1
+        current_player = player_change(move_made[0])
+        cells_ = players_move(current_player, cells_)
+
