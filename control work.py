@@ -59,11 +59,12 @@ def player_change(player):
     return 'Player1' if player == 'Player2' else 'Player2'
 
 def players_move(players_marker_list, cells):
-    answer = ''.join(input(f'Твой ход, {players_marker_list.keys}! Выбери число, соответствующее ячейке, от 1 до {len(cells)}.\n=>').split())
+    players_marker_list.keys
+    answer = ''.join(input(f'Твой ход, {players_marker_list.keys()}! Выбери число, соответствующее ячейке, от 1 до {len(cells)}.\n=>').split())
     lst = str(list(range(1, len(cells)+1)))
     if (len(answer) == 1 or len(answer) == 2) and (answer in lst):
         if cells[int(answer)] == 'None':
-            cells[int(answer)] = players_marker_list.items
+            cells[int(answer)] = players_marker_list.values()
             return cells
         else:
             print(f'Данная ячейка занята. Пожалуйста, выберите свободную ячейку.')
