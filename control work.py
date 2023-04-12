@@ -40,13 +40,16 @@ def players_marker(): #игрок выбирает себе маркер
         print("Нет варианта ответа для выбранного значения. Выберите, пожалуйста, цифру от 1 до 2.")
         players_marker()
 
-    return players_marker_list
+    return players_marker_list # словарь, где хранится 2 значения в виде наименование_игрока:маркер
 
-def first_move(): # игрок выбирает кто ходит первый
+def first_move(players_marker): # игрок выбирает кто ходит первый
     move = ''.join(input('Кто ходит первый? Введите 1, если "Player1", если "Player2" то 2. \n=>').split())
-    players_marker_list = {}
+    first_move_list = {}
     if len(move) == 1 and (move == '1' or move == '2'):
-        first_move_list = 'Player1' if move == '1' else 'Player2'
+        if move == '1':
+            first_move_list['Player1'] = players_marker['Player1']
+        else:
+            first_move_list['Player2'] = players_marker['Player2']
     else:
         print("Нет варианта ответа для выбранного значения. Выберите, пожалуйста, цифру от 1 до 2.")
         first_move()
@@ -55,7 +58,30 @@ def first_move(): # игрок выбирает кто ходит первый
 def player_change(player):
     return 'Player1' if player == 'Player2' else 'Player2'
 
+def players_move(players_marker_list, cells):
+    answer = ''.join(input(f'Твой ход, {players_marker_list.keys}! Выбери число, соответствующее ячейке, от 1 до {len(cells)}.\n=>').split())
+    lst = str(list(range(1, len(cells)+1)))
+    if (len(answer) == 1 or len(answer) == 2) and (answer in lst):
+        if cells[int(answer)] == 'None':
+            cells[int(answer)] = players_marker_list.items
+            return cells
+        else:
+            print(f'Данная ячейка занята. Пожалуйста, выберите свободную ячейку.')
+            players_move(players_marker_list, cells)
+    else:
+        print(f'Нет варианта ответа для выбранного значения. Выберите, пожалуйста, цифру от 1 до {len(cells)}.')
+        players_move(players_marker_list, cells)
+
+
+
+
+
 number_of_cells = number_of_cells()
 players_marker_list = players_marker()
-first_move = first_move()
-print(field(cells(number_of_cells), number_of_cells))
+first_move = first_move(players_marker_list)
+cells = cells(number_of_cells)
+print(field(cells, number_of_cells))
+
+players_move(first_move, cells)
+print(cells)
+print(field(cells, number_of_cells))
