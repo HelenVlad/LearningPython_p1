@@ -3,13 +3,16 @@
 #     items = (items[0], items[1])
 #     return items
 def number_of_cells(): #Ф-я запрашивает размер поля
-    field_size = ''.join(input('Здравствуйте, игроки! Вы запустили игру крестики-нолики. Действие игры происходит на квадратном поле из ячеек размера N x N. Введите число N в диапазоне от 01 до 10:\n=>').split())
-    lst = str(list(range(1, 11)))
-    if (len(field_size) == 1 or len(field_size) == 2) and (field_size in lst):
-        return int(field_size)
-    else:
-        print("Нет варианта ответа для выбранного значения. Выберите, пожалуйста, цифру от 1 до 10.")
-        number_of_cells()
+    print("Привет! Вы запустили игру крестики-нолики. Действие игры происходит на квадратном поле из ячеек размера N x N.\n\
+Игроки по очереди ставят на свободные ячейки поля знаки (один всегда крестики, другой всегда нолики).\n\
+Первый, выстроивший в ряд свои фигуры по вертикали, горизонтали или большой диагонали, выигрывает.")
+    while True:
+        field_size = ''.join(input('Введите число N (количество клеток по горизонтали и вертикали) в диапазоне от 03 до 10:\n=>').split())
+        lst = str(list(range(1, 11)))
+        if (len(field_size) == 1 or len(field_size) == 2) and (field_size in lst):
+            return int(field_size)
+        else:
+            print("Нет варианта ответа для выбранного значения. Выберите, пожалуйста, цифру от 1 до 10.")
 
 def cells(number_of_cells): #ф-я принимает размер поля в виде целочисленного значения number_of_cells,
     # затем генерирует словарь соответствующего размера.
@@ -36,49 +39,48 @@ def field(cells, number_of_cells): #функция рисующая поле
     return "".join(field)
 
 def players_marker(): #игрок выбирает себе маркер
-    marker = ''.join(input('Какой маркер возьмет себе Player1? Если "Х" - введите 1, если "0", то 2. Невыбранный символ присвоится Player2 автоматически. \n=>').split())
+    marker = ''.join(input('Какой знак возьмет себе Player1? Если "Х" - введите 1, если "0", то 2. Невыбранный символ присвоится Player2 автоматически. \n=>').split())
     players_marker_list = []
     if len(marker) == 1 and (marker == '1' or marker == '2'):
-            players_marker_list.append(('Player1', 'X')) if marker == '1' else players_marker_list.append(('Player1', '0'))
-            players_marker_list.append(('Player2', '0')) if marker == '1' else players_marker_list.append(('Player2', 'X'))
+            players_marker_list.append(('Player1', '⨉')) if marker == '1' else players_marker_list.append(('Player1', '◯'))
+            players_marker_list.append(('Player2', '◯')) if marker == '1' else players_marker_list.append(('Player2', '⨉'))
     else:
         print("Нет варианта ответа для выбранного значения. Выберите, пожалуйста, цифру от 1 до 2.")
         players_marker()
 
-    return players_marker_list # список, в котором хранится 2 кортежа в виде (наименование_игрока, маркер)
+    return players_marker_list # список, в котором хранится 2 кортежа в виде [(наименование_игрока, маркер), (наименование_игрока, маркер)]
 
 def first_move(players_marker): #игрок выбирает кто ходит первый
-    move = ''.join(input('Кто ходит первый? Введите 1, если "Player1", если "Player2" то 2. \n=>').split())
-    first_move_list = []
-    if len(move) == 1 and (move == '1' or move == '2'):
-        if move == '1':
-            first_move_list = players_marker[0]
+    while True:
+        move = ''.join(input('Кто ходит первый? Введите 1, если "Player1", если "Player2" то 2. \n=>').split())
+        first_move_list = []
+        if len(move) == 1 and (move == '1' or move == '2'):
+            if move == '1':
+                first_move_list = players_marker[0]
+            else:
+                first_move_list = players_marker[-1]
         else:
-            first_move_list = players_marker[-1] #TODO players_marker выдает неитеррируемое значение
-    else:
-        print("Нет варианта ответа для выбранного значения. Выберите, пожалуйста, цифру от 1 до 2.")
-        first_move()
-    return first_move_list #возвращает список, в котором кортеж вида (наименование_игрока_который_ходит_первым, маркер)
+            print("Нет варианта ответа для выбранного значения. Выберите, пожалуйста, цифру от 1 до 2.")
+        return first_move_list #возвращает кортеж вида (наименование_игрока_который_ходит_первым, маркер)
 
 def player_change(player, players_marker_list):
     if player[0] == 'Player1':
-        return players_marker_list[0]
+        return players_marker_list[-1] # ('Player2', '*')
     else:
-         return players_marker_list[-1] #TODO тут где-то ошибка еще
+         return players_marker_list[0] # ('Player1', '*')
 
 def players_move(current_player, cells):
-    answer = ''.join(input(f'Твой ход, {current_player[0]}! Выбери число, соответствующее ячейке, от 1 до {len(cells)}.\n=>').split())
-    lst = str(list(range(1, len(cells)+1)))
-    if (len(answer) == 1 or len(answer) == 2) and (answer in lst):
-        if cells[int(answer)] == 'None':
-            cells[int(answer)] = current_player[-1]
-            return cells
+    while True:
+        answer = ''.join(input(f'Твой ход, {current_player[0]}! Выбери число, соответствующее ячейке, от 1 до {len(cells)}.\n=>').split())
+        lst = str(list(range(1, len(cells)+1)))
+        if answer in lst:
+            if cells[int(answer)] == 'None':
+                cells[int(answer)] = current_player[-1]
+                return cells
+            else:
+                print(f'Данная ячейка занята. Пожалуйста, выберите свободную ячейку.')
         else:
-            print(f'Данная ячейка занята. Пожалуйста, выберите свободную ячейку.')
-            players_move(current_player, cells)
-    else:
-        print(f'Нет варианта ответа для выбранного значения. Выберите, пожалуйста, цифру от 1 до {len(cells)}.')
-        players_move(current_player, cells)
+            print(f'Нет варианта ответа для выбранного значения. Выберите, пожалуйста, цифру от 1 до {len(cells)}.')
 
 def game():
     number_of_cells_ = number_of_cells() # спрашиваем о размере поля, сохр в переменную
@@ -105,5 +107,11 @@ def game():
             print('Игра окончена.')
             break
 
-markers = players_marker()
-print (markers)
+# markers = [('Player1', '✘'), ('Player2', '◎')]
+# first_move_ = ('Player2', '✘')
+# player_change_ = player_change(first_move_, markers)
+#
+# cells_ = cells(3)
+#
+# print(players_move(first_move_, cells_))
+game()
