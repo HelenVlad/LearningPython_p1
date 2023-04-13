@@ -1,8 +1,8 @@
-def dict_to_list(dict): # преобразует словарь с одним элементом в список с двумя элементами
-    items = list(dict.items())[0]
-    items = (items[0], items[1])
-    return items
-def number_of_cells():
+# def dict_to_list(dict): # преобразует словарь с одним элементом в список с двумя элементами
+#     items = list(dict.items())[0]
+#     items = (items[0], items[1])
+#     return items
+def number_of_cells(): #Ф-я запрашивает размер поля
     field_size = ''.join(input('Здравствуйте, игроки! Вы запустили игру крестики-нолики. Действие игры происходит на квадратном поле из ячеек размера N x N. Введите число N в диапазоне от 01 до 10:\n=>').split())
     lst = str(list(range(1, 11)))
     if (len(field_size) == 1 or len(field_size) == 2) and (field_size in lst):
@@ -11,7 +11,8 @@ def number_of_cells():
         print("Нет варианта ответа для выбранного значения. Выберите, пожалуйста, цифру от 1 до 10.")
         number_of_cells()
 
-def cells(number_of_cells):
+def cells(number_of_cells): #ф-я принимает размер поля в виде целочисленного значения number_of_cells,
+    # затем генерирует словарь соответствующего размера.
     cells = {}
     for key in range(1, (number_of_cells**2)+1):
         cells[key] = 'None'
@@ -38,8 +39,8 @@ def players_marker(): #игрок выбирает себе маркер
     marker = ''.join(input('Какой маркер возьмет себе Player1? Если "Х" - введите 1, если "0", то 2. Невыбранный символ присвоится Player2 автоматически. \n=>').split())
     players_marker_list = []
     if len(marker) == 1 and (marker == '1' or marker == '2'):
-            players_marker_list.append(('Player1', 'X')) if marker == '1' else ('Player1', '0')
-            players_marker_list.append(('Player2', '0')) if marker == '1' else ('Player2', 'X')
+            players_marker_list.append(('Player1', 'X')) if marker == '1' else players_marker_list.append(('Player1', '0'))
+            players_marker_list.append(('Player2', '0')) if marker == '1' else players_marker_list.append(('Player2', 'X'))
     else:
         print("Нет варианта ответа для выбранного значения. Выберите, пожалуйста, цифру от 1 до 2.")
         players_marker()
@@ -104,4 +105,5 @@ def game():
             print('Игра окончена.')
             break
 
-game()
+markers = players_marker()
+print (markers)
