@@ -1,7 +1,3 @@
-# def dict_to_list(dict): # преобразует словарь с одним элементом в список с двумя элементами
-#     items = list(dict.items())[0]
-#     items = (items[0], items[1])
-#     return items
 def number_of_cells(): #Ф-я запрашивает размер поля
     field_size = ''.join(input('\nВведите число N (количество клеток по горизонтали и вертикали) в диапазоне от 03 до 10:\n=>').split())
     lst = [str(number) for number in range(3, 11)]
@@ -108,7 +104,7 @@ def game():
             break
 
 # markers = [('Player1', '✘'), ('Player2', '◎')]
-# # first_move_ = ('Player2', '✘')
+# first_move_ = ('Player2', '✘')
 
 game()
 
