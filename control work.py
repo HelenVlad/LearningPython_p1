@@ -9,7 +9,7 @@ def number_of_cells(): #Ф-я запрашивает размер поля
         return int(field_size)
     else:
         print("Нет варианта ответа для выбранного значения. Выберите, пожалуйста, цифру от 03 до 10.")
-        number_of_cells()
+        return number_of_cells()
 
 
 def cells(number_of_cells): #ф-я принимает размер поля в виде целочисленного значения number_of_cells,
@@ -42,7 +42,7 @@ def players_marker(): #игрок выбирает себе маркер
         players_marker_list = []
         lst = ['1', '2']
         if marker in lst:
-            players_marker_list.append(('Player1', '⨉')) if marker == '1' else players_marker_list.append(('Player1', '◯'))
+            players_marker_list.append(('Player1', 'X')) if marker == '1' else players_marker_list.append(('Player1', '◯'))
             players_marker_list.append(('Player2', '◯')) if marker == '1' else players_marker_list.append(('Player2', '⨉'))
             return players_marker_list  # список, в котором хранится 2 кортежа в виде [(наименование_игрока, маркер), (наименование_игрока, маркер)]
         else:
@@ -107,15 +107,8 @@ def game():
             print('Игра окончена.')
             break
 
-markers = [('Player1', '✘'), ('Player2', '◎')]
-# first_move_ = ('Player2', '✘')
-# player_change_ = player_change(first_move_, markers)
-#
-# cells_ = cells(3)
-#
-# print(players_move(first_move_, cells_))
+# markers = [('Player1', '✘'), ('Player2', '◎')]
+# # first_move_ = ('Player2', '✘')
 
-# lkj = first_move(markers)
-# print(lkj)
-players_marker_list = players_marker()
-print(players_marker_list)
+game()
+
