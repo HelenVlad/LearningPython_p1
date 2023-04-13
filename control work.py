@@ -3,16 +3,14 @@
 #     items = (items[0], items[1])
 #     return items
 def number_of_cells(): #Ф-я запрашивает размер поля
-    print("Привет! Вы запустили игру крестики-нолики. Действие игры происходит на квадратном поле из ячеек размера N x N.\n\
-Игроки по очереди ставят на свободные ячейки поля знаки (один всегда крестики, другой всегда нолики).\n\
-Первый, выстроивший в ряд свои фигуры по вертикали, горизонтали или большой диагонали, выигрывает.")
-    while True:
-        field_size = ''.join(input('Введите число N (количество клеток по горизонтали и вертикали) в диапазоне от 03 до 10:\n=>').split())
-        lst = str(list(range(1, 11)))
-        if (len(field_size) == 1 or len(field_size) == 2) and (field_size in lst):
-            return int(field_size)
-        else:
-            print("Нет варианта ответа для выбранного значения. Выберите, пожалуйста, цифру от 1 до 10.")
+    field_size = ''.join(input('\nВведите число N (количество клеток по горизонтали и вертикали) в диапазоне от 03 до 10:\n=>').split())
+    lst = [str(number) for number in range(3, 11)]
+    if field_size in lst:
+        return int(field_size)
+    else:
+        print("Нет варианта ответа для выбранного значения. Выберите, пожалуйста, цифру от 03 до 10.")
+        number_of_cells()
+
 
 def cells(number_of_cells): #ф-я принимает размер поля в виде целочисленного значения number_of_cells,
     # затем генерирует словарь соответствующего размера.
@@ -39,29 +37,28 @@ def field(cells, number_of_cells): #функция рисующая поле
     return "".join(field)
 
 def players_marker(): #игрок выбирает себе маркер
-    marker = ''.join(input('Какой знак возьмет себе Player1? Если "Х" - введите 1, если "0", то 2. Невыбранный символ присвоится Player2 автоматически. \n=>').split())
-    players_marker_list = []
-    if len(marker) == 1 and (marker == '1' or marker == '2'):
+    while True:
+        marker = ''.join(input('Какой знак возьмет себе Player1? Если "Х" - введите 1, если "0", то 2. Невыбранный символ присвоится Player2 автоматически. \n=>').split())
+        players_marker_list = []
+        lst = ['1', '2']
+        if marker in lst:
             players_marker_list.append(('Player1', '⨉')) if marker == '1' else players_marker_list.append(('Player1', '◯'))
             players_marker_list.append(('Player2', '◯')) if marker == '1' else players_marker_list.append(('Player2', '⨉'))
-    else:
-        print("Нет варианта ответа для выбранного значения. Выберите, пожалуйста, цифру от 1 до 2.")
-        players_marker()
-
-    return players_marker_list # список, в котором хранится 2 кортежа в виде [(наименование_игрока, маркер), (наименование_игрока, маркер)]
+            return players_marker_list  # список, в котором хранится 2 кортежа в виде [(наименование_игрока, маркер), (наименование_игрока, маркер)]
+        else:
+            print("Нет варианта ответа для выбранного значения. Выберите, пожалуйста, цифру от 1 до 2.")
 
 def first_move(players_marker): #игрок выбирает кто ходит первый
     while True:
         move = ''.join(input('Кто ходит первый? Введите 1, если "Player1", если "Player2" то 2. \n=>').split())
-        first_move_list = []
-        if len(move) == 1 and (move == '1' or move == '2'):
-            if move == '1':
-                first_move_list = players_marker[0]
-            else:
-                first_move_list = players_marker[-1]
+        if move == '1':
+            first_move_list = players_marker[0]
+            return first_move_list  # возвращает кортеж вида (наименование_игрока_который_ходит_первым, маркер)
+        elif move == '2':
+            first_move_list = players_marker[-1]
+            return first_move_list  # возвращает кортеж вида (наименование_игрока_который_ходит_первым, маркер)
         else:
             print("Нет варианта ответа для выбранного значения. Выберите, пожалуйста, цифру от 1 до 2.")
-        return first_move_list #возвращает кортеж вида (наименование_игрока_который_ходит_первым, маркер)
 
 def player_change(player, players_marker_list):
     if player[0] == 'Player1':
@@ -83,6 +80,9 @@ def players_move(current_player, cells):
             print(f'Нет варианта ответа для выбранного значения. Выберите, пожалуйста, цифру от 1 до {len(cells)}.')
 
 def game():
+    print("Привет! Вы запустили игру крестики-нолики. Действие игры происходит на квадратном поле из ячеек размера N x N.\n\
+Игроки по очереди ставят на свободные ячейки поля знаки (один всегда крестики, другой всегда нолики).\n\
+Первый, выстроивший в ряд свои фигуры по вертикали, горизонтали или большой диагонали, выигрывает.\n")
     number_of_cells_ = number_of_cells() # спрашиваем о размере поля, сохр в переменную
     players_marker_list = players_marker() #спрашиваем о том, кто каким маркером играет, сохр в переменную
     first_move_ = first_move(players_marker_list) #спрашиваем, кто ходит первый,  сохр в переменную
@@ -107,11 +107,15 @@ def game():
             print('Игра окончена.')
             break
 
-# markers = [('Player1', '✘'), ('Player2', '◎')]
+markers = [('Player1', '✘'), ('Player2', '◎')]
 # first_move_ = ('Player2', '✘')
 # player_change_ = player_change(first_move_, markers)
 #
 # cells_ = cells(3)
 #
 # print(players_move(first_move_, cells_))
-game()
+
+# lkj = first_move(markers)
+# print(lkj)
+players_marker_list = players_marker()
+print(players_marker_list)
