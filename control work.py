@@ -39,7 +39,7 @@ def players_marker(): #игрок выбирает себе маркер
         lst = ['1', '2']
         if marker in lst:
             players_marker_list.append(('Player1', 'X')) if marker == '1' else players_marker_list.append(('Player1', '◯'))
-            players_marker_list.append(('Player2', '◯')) if marker == '1' else players_marker_list.append(('Player2', '⨉'))
+            players_marker_list.append(('Player2', '◯')) if marker == '1' else players_marker_list.append(('Player2', 'X'))
             return players_marker_list  # список, в котором хранится 2 кортежа в виде [(наименование_игрока, маркер), (наименование_игрока, маркер)]
         else:
             print("Нет варианта ответа для выбранного значения. Выберите, пожалуйста, цифру от 1 до 2.")
@@ -75,6 +75,52 @@ def players_move(current_player, cells):
         else:
             print(f'Нет варианта ответа для выбранного значения. Выберите, пожалуйста, цифру от 1 до {len(cells)}.')
 
+# def check_win(cells):
+#     value = list(cells.values())
+#     length = len(value)
+#     middle_index = round(length**0.5)
+#     lst = []
+#     for x in range(0, length,  middle_index):
+#         lst.append(value[x: middle_index + x])
+#     print(f'{value=}, {lst=}, {length=}, {middle_index=}' )
+
+def matrix(cells):
+    value = list(cells.values())
+    length = len(value)
+    middle_index = round(length**0.5)
+    lst = []
+    for x in range(0, length,  middle_index):
+        lst.append(value[x: middle_index + x])
+    return lst
+
+def transpose_matrix(matrix):
+    trans = [[matrix[j][i] for j in range(len(matrix))] for i in range(len(matrix[0]))]
+    return trans
+def check_line(matrix):
+    for lst in matrix:
+        if len(set(lst)) == 1:
+            return True
+
+def check_diagonal(matrix):
+    lenght = round(len(matrix[0]) * 1.5)
+    diagonal = [[matrix[j][i] for j in range(len(matrix))] for i in range(len(matrix[0]))]
+
+
+
+
+
+def check_win(matrix):
+    if check_line(matrix) is False:
+        return check_line(transpose_matrix(matrix))
+    else:
+        return True
+
+
+
+
+
+
+
 def game():
     print("Привет! Вы запустили игру крестики-нолики. Действие игры происходит на квадратном поле из ячеек размера N x N.\n\
 Игроки по очереди ставят на свободные ячейки поля знаки (один всегда крестики, другой всегда нолики).\n\
@@ -93,9 +139,7 @@ def game():
             counter +=1
         else:
             counter +=1
-            print(move_made, players_marker_list)
             current_player = player_change(move_made, players_marker_list)
-            print(current_player)
             cells_ = players_move(current_player, cells_)
             move_made = current_player
         if counter == len(cells_):
@@ -106,5 +150,33 @@ def game():
 # markers = [('Player1', '✘'), ('Player2', '◎')]
 # first_move_ = ('Player2', '✘')
 
-game()
+cells_ = cells(3)
 
+cells_[1] = '0'
+cells_[2] = '0'
+cells_[3] = 'X'
+cells_[4] = 'X'
+cells_[5] = '0'
+cells_[6] = '0'
+cells_[7] = 'X'
+cells_[8] = '0'
+cells_[9] = '0'
+
+# cells_[1] = '1'
+# cells_[2] = '2'
+# cells_[3] = '3'
+# cells_[4] = '4'
+# cells_[5] = '5'
+# cells_[6] = '6'
+# cells_[7] = '7'
+# cells_[8] = '8'
+# cells_[9] = '9'
+
+matrix_ = matrix(cells_)
+print('Матрица выглядит:', matrix_)
+
+print('Транспонированная матрица выглядит:', transpose_matrix(matrix_))
+
+print('Чек выигрыша:', check_win(matrix_))
+
+check_diagonal(matrix_)
