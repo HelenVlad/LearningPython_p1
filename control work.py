@@ -101,20 +101,18 @@ def check_line(matrix):
         if len(set(lst)) == 1:
             return True
 
-def check_diagonal(matrix):
-    lenght = round(len(matrix[0]) * 1.5)
-    diagonal = [[matrix[j][i] for j in range(len(matrix))] for i in range(len(matrix[0]))]
-
-
-
-
+def diagonal(matrix):
+    diagonal1 = [matrix[j][j] for j in range(len(matrix))]
+    i = len(matrix)-1
+    diagonal2 = []
+    for j in range(len(matrix)):
+        diagonal2.append(matrix[j][i])
+        i -= 1
+    diagonal = [diagonal1, diagonal2]
+    return diagonal
 
 def check_win(matrix):
-    if check_line(matrix) is False:
-        return check_line(transpose_matrix(matrix))
-    else:
-        return True
-
+    return True if any([check_line(matrix), check_line(transpose_matrix(matrix)), check_line(diagonal(matrix))]) is True else False
 
 
 
@@ -159,7 +157,7 @@ cells_[4] = 'X'
 cells_[5] = '0'
 cells_[6] = '0'
 cells_[7] = 'X'
-cells_[8] = '0'
+cells_[8] = 'X'
 cells_[9] = '0'
 
 # cells_[1] = '1'
@@ -178,5 +176,3 @@ print('Матрица выглядит:', matrix_)
 print('Транспонированная матрица выглядит:', transpose_matrix(matrix_))
 
 print('Чек выигрыша:', check_win(matrix_))
-
-check_diagonal(matrix_)
