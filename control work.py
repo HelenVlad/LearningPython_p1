@@ -75,23 +75,6 @@ def players_move(current_player, cells):
         else:
             print(f'Нет варианта ответа для выбранного значения. Выберите, пожалуйста, цифру от 1 до {len(cells)}.')
 
-# def check_win(cells):
-#     value = list(cells.values())
-#     length = len(value)
-#     middle_index = round(length**0.5)
-#     lst = []
-#     for x in range(0, length,  middle_index):
-#         lst.append(value[x: middle_index + x])
-#     print(f'{value=}, {lst=}, {length=}, {middle_index=}' )
-
-def matrix(cells):
-    value = list(cells.values())
-    length = len(value)
-    middle_index = round(length**0.5)
-    lst = []
-    for x in range(0, length,  middle_index):
-        lst.append(value[x: middle_index + x])
-    return lst
 
 def transpose_matrix(matrix):
     trans = [[matrix[j][i] for j in range(len(matrix))] for i in range(len(matrix[0]))]
@@ -111,13 +94,16 @@ def diagonal(matrix):
     diagonal = [diagonal1, diagonal2]
     return diagonal
 
-def check_win(matrix):
-    return True if any([check_line(matrix), check_line(transpose_matrix(matrix)), check_line(diagonal(matrix))]) is True else False
-
-
-
-
-
+def check_win(cells):
+    def matrix(cells):
+        value = list(cells.values())
+        length = len(value)
+        middle_index = round(length ** 0.5)
+        lst = []
+        for x in range(0, length, middle_index):
+            lst.append(value[x: middle_index + x])
+        return lst
+    return True if any([check_line(matrix(cells)), check_line(transpose_matrix(matrix(cells))), check_line(diagonal(matrix(cells)))]) is True else False
 
 def game():
     print("Привет! Вы запустили игру крестики-нолики. Действие игры происходит на квадратном поле из ячеек размера N x N.\n\
@@ -170,9 +156,9 @@ cells_[9] = '0'
 # cells_[8] = '8'
 # cells_[9] = '9'
 
-matrix_ = matrix(cells_)
-print('Матрица выглядит:', matrix_)
+# matrix_ = matrix(cells_)
+# print('Матрица выглядит:', matrix_)
+#
+# print('Транспонированная матрица выглядит:', transpose_matrix(matrix_))
 
-print('Транспонированная матрица выглядит:', transpose_matrix(matrix_))
-
-print('Чек выигрыша:', check_win(matrix_))
+print('Чек выигрыша:', check_win(cells_))
