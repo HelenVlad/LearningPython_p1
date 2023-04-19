@@ -81,8 +81,9 @@ def transpose_matrix(matrix):
     return trans
 def check_line(matrix):
     for lst in matrix:
-        if len(set(lst)) == 1:
-            return True
+        if 'None' not in lst:
+            if len(set(lst)) == 1:
+                return True
 
 def diagonal(matrix):
     diagonal1 = [matrix[j][j] for j in range(len(matrix))]
@@ -125,6 +126,10 @@ def game():
             counter +=1
             current_player = player_change(move_made, players_marker_list)
             cells_ = players_move(current_player, cells_)
+            if check_win(cells_) is True:
+                print(field(cells_, number_of_cells_))
+                print(f'Игра окончена! Победил игрок {current_player[0]}!')
+                break
             move_made = current_player
         if counter == len(cells_):
             print(field(cells_, number_of_cells_))
@@ -134,17 +139,17 @@ def game():
 # markers = [('Player1', '✘'), ('Player2', '◎')]
 # first_move_ = ('Player2', '✘')
 
-cells_ = cells(3)
-
-cells_[1] = '0'
-cells_[2] = '0'
-cells_[3] = 'X'
-cells_[4] = 'X'
-cells_[5] = '0'
-cells_[6] = '0'
-cells_[7] = 'X'
-cells_[8] = 'X'
-cells_[9] = '0'
+# cells_ = cells(3)
+#
+# cells_[1] = '0'
+# cells_[2] = '0'
+# cells_[3] = 'X'
+# cells_[4] = 'X'
+# cells_[5] = '0'
+# cells_[6] = '0'
+# cells_[7] = 'X'
+# cells_[8] = 'X'
+# cells_[9] = '0'
 
 # cells_[1] = '1'
 # cells_[2] = '2'
@@ -161,4 +166,5 @@ cells_[9] = '0'
 #
 # print('Транспонированная матрица выглядит:', transpose_matrix(matrix_))
 
-print('Чек выигрыша:', check_win(cells_))
+# print('Чек выигрыша:', check_win(cells_))
+game()
